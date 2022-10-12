@@ -1,0 +1,54 @@
+@startuml gps
+
+
+skinparam actorStyle awesome
+actor user as programmer
+
+package Public {
+    usecase "gps_api"    as module_public1
+    usecase "gps_config" as module_public2
+
+note left of (module_public1)
+    Functions publics:
+    - gps_init: Init module
+    - gps_get_velocity_north_axis : Get values read by UART
+    - gps_get_velocity_east_axis : Get values read by UART
+    - gps_get_velocity_down_axis : Get values read by UART
+end note
+note left of (module_public2)
+    Configure the module:
+    * Position of fields by GPS 
+    * Length max every message
+end note
+}
+
+package Private {
+    usecase "gps_conductor" as module_private1
+    usecase "gps_driver"    as module_private2
+    usecase "gps_hdwr"      as module_private3
+
+note left of (module_private1)
+    Thread 
+end note
+note left of (module_private2)
+    Logic and save dates
+    Logic and save dates
+end note
+note left of (module_private3)
+    Calculate length of message 
+    Controller dirver UART 
+end note
+}
+
+programmer      --> module_public1
+programmer      --> module_public2
+module_public2  --> Private
+module_public1  --> module_private1
+module_public1  --> module_private2
+module_private1 --> module_private2
+module_private1 --> module_private3
+module_private2 --> module_private3
+module_private3 --> module_private2
+
+@enduml
+

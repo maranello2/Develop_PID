@@ -1,0 +1,51 @@
+@startuml flight_controller
+
+
+skinparam actorStyle awesome
+actor user as programmer
+
+package Public {
+    usecase "flight_controller_api"    as module_public1
+    usecase "flight_controller_config" as module_public2
+
+note left of (module_public1)
+    Functions publics:
+    - flight_controller_init : Configure flight_controller module
+    - flight_controller_decrease: Decrease max working of DACs
+    - flight_controller_increase: Increase max working of DACs
+end note
+note left of (module_public2)
+    Configure the module:
+    * Max number of flight controller
+end note
+}
+
+package Private {
+    usecase "flight_controller_conductor" as module_private1
+    usecase "flight_controller_driver"    as module_private2
+    usecase "flight_controller_hdwr"      as module_private3
+
+note left of (module_private1)
+    Thread
+end note
+note left of (module_private2)
+    Logic and save dates
+end note
+note left of (module_private3)
+    Get values ADCs
+    Controller DACs
+end note
+}
+
+programmer      --> module_public1
+programmer      --> module_public2
+module_public2  --> Private
+module_public1  --> module_private1
+module_public1  --> module_private2
+module_private1 --> module_private2
+module_private1 --> module_private3
+module_private2 --> module_private3
+module_private3 --> module_private2
+
+@enduml
+

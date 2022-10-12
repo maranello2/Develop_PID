@@ -1,0 +1,43 @@
+@startuml user
+
+
+skinparam actorStyle awesome
+actor user as programmer
+
+package Public {
+    usecase "user_api"    as module_public1
+    usecase "user_config" as module_public2
+
+note left of (module_public1)
+    Functions publics:
+    - user_register: Register new task
+    - user_unregister: Un register a task
+    - user_start: Start task user
+    - user_stop: Stop task user
+end note
+note left of (module_public2)
+    Configure the module
+end note
+}
+
+package Private {
+    usecase "user_conductor" as module_private1
+    usecase "user_driver"    as module_private2
+
+note left of (module_private1)
+    Thread every 100 ms
+end note
+note left of (module_private2)
+    useric and save dates
+end note
+}
+
+programmer      --> module_public1
+programmer      --> module_public2
+module_public2  --> Private
+module_public1  --> module_private1
+module_public1  --> module_private2
+module_private1 --> module_private2
+
+@enduml
+

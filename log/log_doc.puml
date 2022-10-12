@@ -1,0 +1,42 @@
+@startuml log
+
+skinparam actorStyle awesome
+actor user as programmer
+
+package Public {
+    usecase "log_api"    as module_public1
+    usecase "log_config" as module_public2
+
+note left of (module_public1)
+    Functions publics:
+    - log_register: Register new task
+    - log_unregister: Un register a task
+    - log_start: Start task log
+    - log_stop: Stop task log
+end note
+note left of (module_public2)
+    Configure the module
+end note
+}
+
+package Private {
+    usecase "log_conductor" as module_private1
+    usecase "log_driver"    as module_private2
+
+note left of (module_private1)
+    Thread every 100 ms
+end note
+note left of (module_private2)
+    Logic and save dates
+end note
+}
+
+programmer      --> module_public1
+programmer      --> module_public2
+module_public2  --> Private
+module_public1  --> module_private1
+module_public1  --> module_private2
+module_private1 --> module_private2
+
+@enduml
+

@@ -1,0 +1,13 @@
+@startuml kart
+
+state System {
+    Create_Threads --> LOG
+}
+
+[*] --> main
+main --> HAL_Drivers 
+HAL_Drivers --> System
+
+HAL_Drivers : Create By STM32Cube MX
+
+@enduml

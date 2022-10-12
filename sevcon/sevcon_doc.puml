@@ -1,0 +1,52 @@
+@startuml sevcon
+
+
+skinparam actorStyle awesome
+actor user as programmer
+
+package Public {
+    usecase "sevcon_api"    as module_public1
+    usecase "sevcon_config" as module_public2
+
+note left of (module_public1)
+    Functions publics:
+    - sevcon_init : Configure sevcon module
+end note
+note left of (module_public2)
+    Configure the module:
+    * Max number of drivers.
+    * Index of motor and opposite motor.
+    * Max temperature and max percent´s work every motor
+end note
+}
+
+package Private {
+    usecase "sevcon_conductor" as module_private1
+    usecase "sevcon_driver"    as module_private2
+    usecase "sevcon_hdwr"      as module_private3
+
+note left of (module_private1)
+    Thread 
+    Init GPS module
+end note
+note left of (module_private2)
+    Proccess messages
+    Logic and save dates
+end note
+note left of (module_private3)
+    Controller dirver CAN
+end note
+}
+
+programmer      --> module_public1
+programmer      --> module_public2
+module_public2  --> Private
+module_public1  --> module_private1
+module_public1  --> module_private2
+module_private1 --> module_private2
+module_private1 --> module_private3
+module_private2 --> module_private3
+module_private3 --> module_private2
+
+@enduml
+

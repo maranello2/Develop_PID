@@ -1,0 +1,19 @@
+@startuml heartbeat
+
+
+skinparam actorStyle awesome
+actor user as programmer
+
+package Public {
+    usecase "heartbeat_api"    as module_public1
+
+note left of (module_public1)
+    Functions publics:
+    - heartbeat_init:  Register function to periodic module
+end note
+}
+
+programmer      --> module_public1
+
+@enduml
+
